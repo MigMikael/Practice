@@ -14,8 +14,8 @@ cv2.waitKey(0)
 cv2.destroyAllWindows()
 '''
 
-for i in range(0, 5, 5):
-    for j in range(0, 5, 5):
+for i in range(0, row, 5):
+    for j in range(0, col, 5):
         tiny_crop = img[i:i+5, j:j+5]
 
         blue = tiny_crop[:, :, 0]
@@ -46,14 +46,17 @@ data = data.astype(np.int64)
 data_set = []
 
 print(data.shape)
-for i in range(1000):
+for i in range(data.shape[0]):
     data_set.append(str(data[i]) + " ")
 # np.savetxt('C:/Users/Mig/Desktop/data-text.txt', data.astype(np.int32))
 
+count = 0
 with open('C:/Users/Mig/Desktop/data-text.txt', 'w') as outfile:
     for data_line in data_set:
-        print(data_line)
+        outfile.write(data_line)
+        count += 1
 
+print(count)
 print('finish')
 e2 = cv2.getTickCount()
 time = (e2 - e1) / cv2.getTickFrequency()
