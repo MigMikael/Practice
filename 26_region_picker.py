@@ -26,8 +26,10 @@ def select_image():
     if len(path) > 0:
         if count % 2 != 0:
             cv2_image_one = cv2.imread(path)
+            cv2_image_one = cv2.cvtColor(cv2_image_one, cv2.COLOR_RGB2BGR)
             image_one = Image.fromarray(cv2_image_one)
             image_one = ImageTk.PhotoImage(image_one)
+            cv2_image_one = cv2.cvtColor(cv2_image_one, cv2.COLOR_BGR2RGB)
 
             print(image_one.width())
             print(image_one.height())
@@ -49,13 +51,15 @@ def select_image():
             canvas1.bind("<1>", on_mouse_down)
         else:
             cv2_image_two = cv2.imread(path)
+            cv2_image_two = cv2.cvtColor(cv2_image_two, cv2.COLOR_RGB2BGR)
             image_two = Image.fromarray(cv2_image_two)
             image_two = ImageTk.PhotoImage(image_two)
+            cv2_image_two = cv2.cvtColor(cv2_image_two, cv2.COLOR_BGR2RGB)
 
             print(image_two.width())
             print(image_two.height())
             canvas2.pack_forget()
-            canvas2.create_image(image_two.width() / 2, image_two.height() / 2, anchor=CENTER, image=image_one)
+            canvas2.create_image(image_two.width() / 2, image_two.height() / 2, anchor=CENTER, image=image_two)
             canvas2.config(scrollregion=(0, 0, image_two.width(), image_two.height()))
 
             hbar2 = Scrollbar(canvas2, orient=HORIZONTAL)
@@ -75,12 +79,11 @@ def select_image():
 
 
 def on_mouse_down(event):
-    global image_one
-    global image_two
     global cv2_image_one
     global cv2_image_two
     global click_count
     canvas = event.widget
+    canvas.create_rectangle(event.x, event.y, event.x + 5, event.y + 5, fill='#000000')
     cord_x = canvas.canvasx(event.y)
     cord_y = canvas.canvasy(event.x)
     cord_x = int(cord_x)
@@ -88,10 +91,10 @@ def on_mouse_down(event):
     print("frame coordinates : {}, {}".format(cord_x, cord_y))
     # print("root coordinates : {}, {}".format(event.x_root, event.y_root))
     if click_count % 2 != 0:
-        img_one_point.append([cord_x, cord_y])
+        img_one_point.append([cord_x + 5, cord_y + 5])
         print("image 1 pixel : {}".format(cv2_image_one[cord_y, cord_x]))
     else:
-        img_two_point.append([cord_x, cord_y])
+        img_two_point.append([cord_x + 5, cord_y + 5])
         print("image 2 pixel : {}".format(cv2_image_two[cord_y, cord_x]))
 
     print("##### click : {}".format(click_count))
@@ -180,15 +183,19 @@ root.state('zoomed')
 canvas1 = Canvas(root, bg='blue', width=400, height=400)
 canvas1.pack(side='left')
 
-
 canvas2 = Canvas(root, bg='blue', width=400, height=400)
 canvas2.pack(side='right')
 
+control_frm = Frame(root, bg='blue')
+control_frm.pack(side='top')
 
-select_btn = Button(root, text="Select an image", command=select_image)
-select_btn.pack(side='top', padx="10", pady="10")
+reset_btn = Button(control_frm, text="Reset", command=reset)
+reset_btn.pack(side='left', padx="10", pady="10")
 
-save_btn = Button(root, text="SAVE", command=save_data)
-save_btn.pack(side='top', padx="10", pady="10")
+select_btn = Button(control_frm, text="Select an image", command=select_image)
+select_btn.pack(side='left', padx="10", pady="10")
+
+save_btn = Button(control_frm, text="SAVE", command=save_data)
+save_btn.pack(side='left', padx="10", pady="10")
 
 root.mainloop()

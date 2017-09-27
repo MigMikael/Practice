@@ -1,8 +1,17 @@
-path = 'C:/Users/Mig/Desktop/Microsoft-Logo-3.jpg'
-word = path.split('/')
-print(word)
-last_word = word[-1]
-print(last_word)
+import cv2
 
-path = path.replace(last_word, '')
-print(path)
+path = 'C:/Users/Mig/Desktop/test_image/img1.jpg'
+
+
+img = cv2.imread(path)
+print(img[774, 1948])
+print(img[1020, 2295])
+print(img[1125, 2233])
+
+
+path = 'C:/Users/Mig/Desktop/test_image/img2.jpg'
+
+img = cv2.imread(path)
+print(img[1359, 2386])
+print(img[1578, 2854])
+print(img[1741, 2783])
