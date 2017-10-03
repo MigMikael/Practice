@@ -59,3 +59,6 @@ print(s.center(7))              # ' hello '
 print(s.center(11))             # '   hello   '
 print(s.replace('l', '(ell)'))  # 'he(ell)(ell)o'
 print(' world'.strip())         # world
+
+if 3.0 == 3:
+    print('equals')
