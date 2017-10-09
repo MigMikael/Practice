@@ -7,40 +7,60 @@ from tkinter import filedialog
 img1_cord = []
 img2_cord = []
 region = 7
-total_click = 3
-click_count = 0.0
+total_click = 90
+cord_list1_len = 0
+cord_list2_len = 0
+last_img1_cord = None
+last_img2_cord = None
 
 
 # mouse callback function
 def draw_rectangle1(event, x, y, flags, param):
-    global click_count
+    global cord_list1_len
     if event == cv2.EVENT_LBUTTONDBLCLK:
-        cv2.rectangle(img1, (x, y), (x + region, y + region), (0, 255, 0), 1)
+        if cord_list1_len % 3 == 0:
+            cv2.rectangle(img1, (x, y), (x + region, y + region), (255, 0, 0), 1)
+        elif cord_list1_len % 3 == 1:
+            cv2.rectangle(img1, (x, y), (x + region, y + region), (0, 255, 0), 1)
+        else:
+            cv2.rectangle(img1, (x, y), (x + region, y + region), (0, 0, 255), 1)
         img1_cord.append([x, y])
-        print(img1[x, y])
+        # print(img1[y, x])
         print(x, y)
-        click_count += 0.5
-        print("####### click " + str(click_count))
-        click_value.set(str(click_count))
+        cord_list1_len += 1
+        print("####### img1 click " + str(cord_list1_len))
+        click_value.set(str(cord_list1_len))
+        cv2.displayStatusBar('image1', str(cord_list1_len))
 
 
 # mouse callback function
 def draw_rectangle2(event, x, y, flags, param):
-    global click_count
+    global cord_list2_len
     if event == cv2.EVENT_LBUTTONDBLCLK:
-        cv2.rectangle(img2, (x, y), (x + region, y + region), (0, 255, 0), 1)
+        if cord_list2_len % 3 == 0:
+            cv2.rectangle(img2, (x, y), (x + region, y + region), (255, 0, 0), 1)
+        elif cord_list2_len % 3 == 1:
+            cv2.rectangle(img2, (x, y), (x + region, y + region), (0, 255, 0), 1)
+        else:
+            cv2.rectangle(img2, (x, y), (x + region, y + region), (0, 0, 255), 1)
+
         img2_cord.append([x, y])
-        print(img2[x, y])
+        # print(img2[y, x])
         print(x, y)
-        click_count += 0.5
-        print("####### click " + str(click_count))
-        click_value.set(str(click_count))
+        cord_list2_len += 1
+        print("####### img2 click " + str(cord_list2_len))
+        click_value.set(str(cord_list2_len))
+        cv2.displayStatusBar('image2', str(cord_list2_len))
 
 
 def select_image():
     global img1
     global img2
     global path
+    global last_img1_cord
+    global last_img2_cord
+    global cord_list1_len
+    global cord_list2_len
     path = filedialog.askdirectory()
     print(path)
     if len(path) > 0:
@@ -57,7 +77,9 @@ def select_image():
         while (True):
             cv2.imshow('image1', img1)
             cv2.imshow('image2', img2)
-            if cv2.waitKey(20) & 0xFF == 27 or click_count == total_click:
+
+            # print(cv2.waitKey(20))
+            if cv2.waitKey(20) & 0xFF == 27 or (cord_list1_len == total_click and cord_list2_len == total_click):
                 '''
                 for cord in img1_cord:
                     print("img 1 cord : " + str(cord[0]) + " " + str(cord[1]))
@@ -67,6 +89,18 @@ def select_image():
                     print(img2[cord[0], cord[1]])
                 '''
                 break
+
+            elif cv2.waitKey(20) & 0xFF == 122:
+                print('Press - Z')
+                last_img1_cord = img1_cord.pop()
+                last_img2_cord = img2_cord.pop()
+                print('#### pop last value to list ####')
+            elif cv2.waitKey(20) & 0xFF == 121:
+                print('Press - Y')
+                img1_cord.append(last_img1_cord)
+                img2_cord.append(last_img2_cord)
+                print('#### add last value back ####')
+
         cv2.destroyAllWindows()
 
 
@@ -80,7 +114,7 @@ def save_data():
         print(num)
         x1 = img1_cord[num][0]
         y1 = img1_cord[num][1]
-        print("image 1 pixel : {}".format(the_img1[x1, y1]))
+        print("image 1 pixel : {}".format(the_img1[y1, x1]))
         tiny_crop_one = the_img1[y1:y1 + region, x1:x1 + region]
         cv2.imwrite(path + '/img1_tiny_crop_' + str(num) + '.jpg', tiny_crop_one)
         print(tiny_crop_one.shape)
@@ -93,7 +127,7 @@ def save_data():
 
         x2 = img2_cord[num][0]
         y2 = img2_cord[num][1]
-        print("image 2 pixel : {}".format(the_img2[x2, y2]))
+        print("image 2 pixel : {}".format(the_img2[y2, x2]))
         tiny_crop_two = the_img2[y2:y2 + region, x2:x2 + region]
         cv2.imwrite(path + '/img2_tiny_crop_' + str(num) + '.jpg', tiny_crop_two)
         print(tiny_crop_two.shape)

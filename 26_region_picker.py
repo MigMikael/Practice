@@ -7,7 +7,7 @@ import cv2
 
 
 count = 1
-click_count = 1
+cord_list_len = 1
 img_one_point = []
 img_two_point = []
 region_area = 5
@@ -81,7 +81,7 @@ def select_image():
 def on_mouse_down(event):
     global cv2_image_one
     global cv2_image_two
-    global click_count
+    global cord_list_len
     canvas = event.widget
     canvas.create_rectangle(event.x, event.y, event.x + 5, event.y + 5, fill='#000000')
     cord_x = canvas.canvasx(event.y)
