@@ -7,7 +7,8 @@ from tkinter import filedialog
 img1_cord = []
 img2_cord = []
 region = 7
-total_click = 90
+total_click_sqrt = 9
+total_click = 270
 cord_list1_len = 0
 cord_list2_len = 0
 last_img1_cord = None
@@ -26,9 +27,12 @@ def draw_rectangle1(event, x, y, flags, param):
             cv2.rectangle(img1, (x, y), (x + region, y + region), (0, 0, 255), 1)
         img1_cord.append([x, y])
         # print(img1[y, x])
-        print(x, y)
+        # print(x, y)
         cord_list1_len += 1
-        print("####### img1 click " + str(cord_list1_len))
+        print("##### img1 click " + str(cord_list1_len))
+        if cord_list1_len % total_click_sqrt == 0:
+            print("-----[ Complete 1 ]-----")
+
         click_value.set(str(cord_list1_len))
         cv2.displayStatusBar('image1', str(cord_list1_len))
 
@@ -46,9 +50,12 @@ def draw_rectangle2(event, x, y, flags, param):
 
         img2_cord.append([x, y])
         # print(img2[y, x])
-        print(x, y)
+        # print(x, y)
         cord_list2_len += 1
-        print("####### img2 click " + str(cord_list2_len))
+        print("##### img2 click " + str(cord_list2_len))
+        if cord_list2_len % total_click_sqrt == 0:
+            print("-----[ Complete 2 ]-----")
+
         click_value.set(str(cord_list2_len))
         cv2.displayStatusBar('image2', str(cord_list2_len))
 
@@ -111,12 +118,13 @@ def save_data():
     the_img2 = cv2.imread(path + '/img2.jpg')
 
     for num in range(total_click):
-        print(num)
+        print('\n')
+        print("Line = " + str(num + 1))
         x1 = img1_cord[num][0]
         y1 = img1_cord[num][1]
-        print("image 1 pixel : {}".format(the_img1[y1, x1]))
+        # print("image 1 pixel : {}".format(the_img1[y1, x1]))
         tiny_crop_one = the_img1[y1:y1 + region, x1:x1 + region]
-        cv2.imwrite(path + '/img1_tiny_crop_' + str(num) + '.jpg', tiny_crop_one)
+        # cv2.imwrite(path + '/img1_tiny_crop_' + str(num) + '.jpg', tiny_crop_one)
         print(tiny_crop_one.shape)
         data_one = tiny_crop_one.ravel()
         data_one = data_one.astype(np.int64)
@@ -127,9 +135,9 @@ def save_data():
 
         x2 = img2_cord[num][0]
         y2 = img2_cord[num][1]
-        print("image 2 pixel : {}".format(the_img2[y2, x2]))
+        # print("image 2 pixel : {}".format(the_img2[y2, x2]))
         tiny_crop_two = the_img2[y2:y2 + region, x2:x2 + region]
-        cv2.imwrite(path + '/img2_tiny_crop_' + str(num) + '.jpg', tiny_crop_two)
+        # cv2.imwrite(path + '/img2_tiny_crop_' + str(num) + '.jpg', tiny_crop_two)
         print(tiny_crop_two.shape)
         data_two = tiny_crop_two.ravel()
         data_two = data_two.astype(np.int64)
@@ -140,26 +148,27 @@ def save_data():
         data_set_two.append('\n')
 
         if num == 0:
-            with open(path + '/train-data.txt', 'w') as outfile:
+            with open(path + '/train-data-9.txt', 'w') as outfile:
                 for data_line in data_set_one:
                     outfile.write(data_line)
                 for data_line in data_set_two:
                     outfile.write(data_line)
         else:
-            with open(path + '/train-data.txt', 'a') as outfile:
+            with open(path + '/train-data-9.txt', 'a') as outfile:
                 for data_line in data_set_one:
                     outfile.write(data_line)
                 for data_line in data_set_two:
                     outfile.write(data_line)
 
-        print(data_set_one)
+        # print(data_set_one)
         print(len(data_set_one))
 
-        print(data_set_two)
+        # print(data_set_two)
         print(len(data_set_two))
 
-    cv2.imwrite(path + '/img1_edit.jpg', img1)
-    cv2.imwrite(path + '/img2_edit.jpg', img2)
+    cv2.imwrite(path + '/img1_edit-9.jpg', img1)
+    cv2.imwrite(path + '/img2_edit-9.jpg', img2)
+    print('###### FINISH ######')
 
 
 def quit_program():
