@@ -10,9 +10,18 @@ print("Finish")
 '''
 
 Mi5_filename = ""
-iPad_filename = ""
 
-galaxy_s8_filename = "C:\\Users\\Mig\\PycharmProjects\\Practice\\capture_image\\20171231_182926"
+'''
+iPad_filename = "C:\\Users\\Mig\\PycharmProjects\\Practice\\capture_image\\IMG_1009"
+original_image = cv2.imread(iPad_filename + ".JPG")
+newx, newy = (original_image.shape[1]*1200)/2448, (original_image.shape[0]*1600)/3264
+new_image = cv2.resize(original_image, (int(newx), int(newy)))
+cv2.imwrite(iPad_filename+"_resize.jpg", new_image)
+print("Finish")
+'''
+
+
+galaxy_s8_filename = "C:\\Users\\Mig\\PycharmProjects\\Practice\\capture_image\\20180101_120158"
 original_image = cv2.imread(galaxy_s8_filename + ".jpg")
 newx, newy = (original_image.shape[1]*1200)/3024, (original_image.shape[0]*1600)/4032
 new_image = cv2.resize(original_image, (int(newx), int(newy)))

@@ -20,7 +20,7 @@ print(len(color_list))
 #print(color_list)
 
 for k in range((len(color_list) // 300)+1):
-    img_name = "the_image_"+str(k)+".png"
+    img_name = "the_image_"+str(k+1)+".png"
     save_path = "C:\\Users\\Mig\\PycharmProjects\\Practice\\gen_image\\"
     height, width = 2480, 3508  # A4 paper 300 PPI
 
@@ -39,9 +39,10 @@ for k in range((len(color_list) // 300)+1):
             B = color_list[index][2]
             #print(R, G, B)
 
-            cv2.rectangle(the_image,  (10+(120*i), 10+(120*j)), (120+(120*i), 120+(120*j)), (B, G, R), -1)
+            cv2.rectangle(the_image,  (200+(120*i), 200+(120*j)), (310+(120*i), 310+(120*j)), (B, G, R), -1)
             count += 1
-    cv2.putText(the_image, str(k+1), (2500, 360), font, 8, (0, 0, 0), 20, cv2.LINE_AA)
+    cv2.putText(the_image, str(k+1), (2600, 400), font, 6, (0, 0, 0), 15, cv2.LINE_AA)
+    cv2.rectangle(the_image, (100, 100), (3000, 2246), (0, 0, 0), 5)
     cv2.imwrite(save_path+img_name, the_image)
     #print("write---------------")
 
