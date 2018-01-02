@@ -19,7 +19,7 @@ def plot_coordinate(img, region):
     count = 0
     pixel_list = []
     for i in range(20):
-        for j in range(15):
+        for j in range(16):
             indexX, indexY = startX + 10 + (66 * i), startY + 10 + (66 * j)
 
             index_sq1_x, index_sq1_y = indexX, indexY
@@ -130,7 +130,7 @@ device4_name = "S8+"
 device1_img_path = base_path + device1_name + "\\data_set\\img109.jpg"
 device2_img_path = base_path + device2_name + "\\data_set\\img109.jpg"
 device3_img_path = base_path + device3_name + "\\data_set\\img109.jpg"
-device4_img_path = base_path + device4_name + "\\data_set\\img109.jpg"
+device4_img_path = base_path + device4_name + "\\data_set\\img94.jpg"
 
 
 write_file_name = 'new_data.txt'

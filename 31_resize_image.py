@@ -21,7 +21,7 @@ print("Finish")
 '''
 
 
-galaxy_s8_filename = "C:\\Users\\Mig\\PycharmProjects\\Practice\\capture_image\\20180101_120158"
+galaxy_s8_filename = "C:\\Users\\Mig\\PycharmProjects\\Practice\\capture_image\\20180102_232054"
 original_image = cv2.imread(galaxy_s8_filename + ".jpg")
 newx, newy = (original_image.shape[1]*1200)/3024, (original_image.shape[0]*1600)/4032
 new_image = cv2.resize(original_image, (int(newx), int(newy)))
