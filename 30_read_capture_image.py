@@ -12,15 +12,19 @@ def read_image(path):
     return img
 
 
-def plot_coordinate(img, region):
+def plot_coordinate(img, x, y, region):
     edit_img = img.copy()
-    startX = int(input("Input start X Coordinate : "))
-    startY = int(input("Input start Y Coordinate : "))
+    startX = x
+    startY = y
     count = 0
     pixel_list = []
+
     for i in range(20):
         for j in range(16):
-            indexX, indexY = startX + 10 + (66 * i), startY + 10 + (66 * j)
+            bias_x = i // 5
+            bias_y = j // 4
+
+            indexX, indexY = startX + 10 + (67 * i) - (bias_x * 2), startY + 10 + (67 * j) - (bias_y * 2)
 
             index_sq1_x, index_sq1_y = indexX, indexY
             index_sq2_x, index_sq2_y = indexX + 9, indexY
@@ -93,10 +97,7 @@ def plot_coordinate(img, region):
 
             count += 1
 
-    cv2.imshow("read_image", edit_img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-    return pixel_list
+    return pixel_list, edit_img
 
 
 def collect_pixel_data(tiny_crop, pixel_list):
@@ -110,13 +111,17 @@ def collect_pixel_data(tiny_crop, pixel_list):
     return pixel_list
 
 
-def write_file(the_list, file_name):
-    with open(file_name, 'w') as outfile:
+def write_file(file_name, the_list):
+    with open(file_name, 'a') as outfile:
         for i in range(len(the_list)):
             data_line = str(the_list[i][0]) + " " + str(the_list[i][1]) + " " + str(the_list[i][2])
             data_line = data_line + "\n"
             outfile.write(data_line)
-    print("wrote file")
+    #print("wrote file")
+
+
+def write_image(write_path, image):
+    cv2.imwrite(write_path, image)
 
 
 region = 7
@@ -133,14 +138,24 @@ motoc_img_path = base_path + motoc + "\\data_set\\resize_img\\"
 gs8_img_path = base_path + gs8 + "\\data_set\\resize_img\\"
 
 greetings()
+write_file_name = motoc + "_data" + ".txt"
 
-for i in range(103):
-    write_file_name = motoc + "_" + str(i + 1) + ".txt"
-    dev_img_path = motoc_img_path + "img"+str(i+1)+".jpg"
+start_index_path = base_path + motoc + "\\data_set\\resize_img\\start_index.txt"
 
-    device_img = read_image(dev_img_path)
+with open(start_index_path, 'r')as data_file:
+    for line in data_file:
+        no, x, y = line.split(",")
 
-    device_pixel_list = plot_coordinate(device_img, region)
+        img_name = "img"+no
 
-    write_file(device_pixel_list, motoc_img_path + write_file_name)
-    print("Finish Image", i+1)
+        dev_img_path = motoc_img_path + img_name + ".jpg"
+        device_img = read_image(dev_img_path)
+
+        device_pixel_list, edit_image = plot_coordinate(device_img, int(x), int(y), region)
+
+        write_image(motoc_img_path + img_name + "_plot.jpg", edit_image)
+
+        write_file(motoc_img_path + write_file_name, device_pixel_list)
+
+        print("Finish Image", no)
+    print("Finish -------------")
