@@ -5,17 +5,6 @@ sx, sy = 0, 0
 
 def greetings():
     print("Welcome to auto region picker")
-    print("------------------")
-    print("Choose Pair Device")
-    print("------------------")
-    print("(1) iPad Mini 4")
-    print("(2) Mi 5")
-    print("(3) Moto C")
-    print("(4) Galaxy S8+")
-    print("------------------")
-    dev1_no = int(input("Device 1 No : "))
-    dev2_no = int(input("Device 2 No : "))
-    return dev1_no, dev2_no
 
 
 def read_image(path):
@@ -121,11 +110,10 @@ def collect_pixel_data(tiny_crop, pixel_list):
     return pixel_list
 
 
-def write_file(list_one, list_two, file_name):
+def write_file(the_list, file_name):
     with open(file_name, 'w') as outfile:
-        for i in range(len(list_one)):
-            data_line = "|labels " + str(list_one[i][0]) + " " + str(list_one[i][1]) + " " + str(list_one[i][2])
-            data_line = data_line + " |features " + str(list_two[i][0]) + " " + str(list_two[i][1]) + " " + str(list_two[i][2])
+        for i in range(len(the_list)):
+            data_line = str(the_list[i][0]) + " " + str(the_list[i][1]) + " " + str(the_list[i][2])
             data_line = data_line + "\n"
             outfile.write(data_line)
     print("wrote file")
@@ -133,60 +121,26 @@ def write_file(list_one, list_two, file_name):
 
 region = 7
 base_path = "C:\\Users\\Mig\\Documents\\Thesis\\"
+
 ipad = "iPadMini4"
 mi5 = "Mi5"
 motoc = "MotoC"
 gs8 = "S8+"
 
-ipad_img_path = base_path + ipad + "\\data_set\\"
-mi5_img_path = base_path + mi5 + "\\data_set\\"
-motoc_img_path = base_path + motoc + "\\data_set\\"
-gs8_img_path = base_path + gs8 + "\\data_set\\"
+ipad_img_path = base_path + ipad + "\\data_set\\resize_img\\"
+mi5_img_path = base_path + mi5 + "\\data_set\\resize_img\\"
+motoc_img_path = base_path + motoc + "\\data_set\\resize_img\\"
+gs8_img_path = base_path + gs8 + "\\data_set\\resize_img\\"
 
-
-device1_no, device2_no = greetings()
-
-choose_device_1, choose_device_2 = "", ""
-dev1_img_path, dev2_img_path = "", ""
-
-if device1_no == 1:
-    choose_device_1 = ipad
-    dev1_img_path = ipad_img_path
-elif device1_no == 2:
-    choose_device_1 = mi5
-    dev1_img_path = mi5_img_path
-elif device1_no == 3:
-    choose_device_1 = motoc
-    dev1_img_path = motoc_img_path
-elif device1_no == 4:
-    choose_device_1 = gs8
-    dev1_img_path = gs8_img_path
-
-if device2_no == 1:
-    choose_device_2 = ipad
-    dev2_img_path = ipad_img_path
-elif device2_no == 2:
-    choose_device_2 = mi5
-    dev2_img_path = mi5_img_path
-elif device2_no == 3:
-    choose_device_2 = motoc
-    dev2_img_path = motoc_img_path
-elif device2_no == 4:
-    choose_device_2 = gs8
-    dev2_img_path = gs8_img_path
-
-write_data_path = base_path + choose_device_1 + "_" + choose_device_2 + "\\"
+greetings()
 
 for i in range(103):
-    write_file_name = choose_device_1+"_"+choose_device_2+"_"+str(i+1)+".txt"
-    dev1_img_path = dev1_img_path + "img"+str(i+1)+".jpg"
-    dev2_img_path = dev2_img_path + "img"+str(i+1)+".jpg"
+    write_file_name = motoc + "_" + str(i + 1) + ".txt"
+    dev_img_path = motoc_img_path + "img"+str(i+1)+".jpg"
 
-    device1_img = read_image(dev1_img_path)
-    device2_img = read_image(dev2_img_path)
+    device_img = read_image(dev_img_path)
 
-    device1_pixel_list = plot_coordinate(device1_img, region)
-    device2_pixel_list = plot_coordinate(device2_img, region)
+    device_pixel_list = plot_coordinate(device_img, region)
 
-    write_file(device1_pixel_list, device2_pixel_list, write_data_path + write_file_name)
+    write_file(device_pixel_list, motoc_img_path + write_file_name)
     print("Finish Image", i+1)

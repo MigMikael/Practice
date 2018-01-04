@@ -1,30 +1,19 @@
 import cv2
-
-'''
-motoC_filename = "C:\\Users\\Mig\\PycharmProjects\\Practice\\capture_image\\IMG_20171231_162833"
-original_image = cv2.imread(motoC_filename + ".jpg")
-newx, newy = (original_image.shape[1]*1200)/1920, (original_image.shape[0]*1600)/2560
-new_image = cv2.resize(original_image, (int(newx), int(newy)))
-cv2.imwrite(motoC_filename+"_resize.jpg", new_image)
-print("Finish")
-'''
-
-Mi5_filename = ""
-
-'''
-iPad_filename = "C:\\Users\\Mig\\PycharmProjects\\Practice\\capture_image\\IMG_1009"
-original_image = cv2.imread(iPad_filename + ".JPG")
-newx, newy = (original_image.shape[1]*1200)/2448, (original_image.shape[0]*1600)/3264
-new_image = cv2.resize(original_image, (int(newx), int(newy)))
-cv2.imwrite(iPad_filename+"_resize.jpg", new_image)
-print("Finish")
-'''
+import os
 
 
-galaxy_s8_filename = "C:\\Users\\Mig\\PycharmProjects\\Practice\\capture_image\\20180102_232054"
-original_image = cv2.imread(galaxy_s8_filename + ".jpg")
-newx, newy = (original_image.shape[1]*1200)/3024, (original_image.shape[0]*1600)/4032
-new_image = cv2.resize(original_image, (int(newx), int(newy)))
-cv2.imwrite(galaxy_s8_filename+"_resize.jpg", new_image)
-print("Finish")
+iPad_image_path = "C:\\Users\\Mig\\Documents\\Thesis\\iPadMini4\\data_set\\"
+s8_image_path = "C:\\Users\\Mig\\Documents\\Thesis\\S8+\\data_set\\"
+motoC_image_path = "C:\\Users\\Mig\\Documents\\Thesis\\MotoC\\data_set\\"
+Mi5_image_path = "C:\\Users\\Mig\\Documents\\Thesis\\Mi5\\data_set\\"
 
+for filename in os.listdir(Mi5_image_path):
+    original_image = cv2.imread(Mi5_image_path + filename)
+    #newx, newy = (original_image.shape[1] * 1200) / 2448, (original_image.shape[0] * 1600) / 3264
+    #newx, newy = (original_image.shape[1]*1200)/3024, (original_image.shape[0]*1600)/4032
+    #newx, newy = (original_image.shape[1] * 1200) / 1920, (original_image.shape[0] * 1600) / 2560
+    newx, newy = (original_image.shape[1] * 1200) / 3456, (original_image.shape[0] * 1600) / 4608
+    new_image = cv2.resize(original_image, (int(newx), int(newy)))
+    new_filename, extension = filename.split(".")
+    cv2.imwrite(Mi5_image_path + "resize_img\\" + new_filename + "_resize.jpg", new_image)
+    print(filename, "Finish")
