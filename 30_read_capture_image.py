@@ -12,7 +12,7 @@ def read_image(path):
     return img
 
 
-def plot_coordinate(img, x, y, region):
+def plot_coordinate(img, x, y, region, num):
     edit_img = img.copy()
     startX = x
     startY = y
@@ -24,7 +24,10 @@ def plot_coordinate(img, x, y, region):
             bias_x = i // 5
             bias_y = j // 4
 
-            indexX, indexY = startX + 10 + (67 * i) - (bias_x * 2), startY + 10 + (67 * j) - (bias_y * 2)
+            if num == 3 or num == 21 or num == 36 or num == 41 or num == 44 or num == 55 or num == 58 or num == 69:
+                indexX, indexY = startX + 10 + (67 * i) - (bias_x * 7), startY + 10 + (67 * j) - (bias_y * 7)
+            else:
+                indexX, indexY = startX + 10 + (67 * i) - (bias_x * 3), startY + 10 + (67 * j) - (bias_y * 3)
 
             index_sq1_x, index_sq1_y = indexX, indexY
             index_sq2_x, index_sq2_y = indexX + 9, indexY
@@ -138,9 +141,9 @@ motoc_img_path = base_path + motoc + "\\data_set\\resize_img\\"
 gs8_img_path = base_path + gs8 + "\\data_set\\resize_img\\"
 
 greetings()
-write_file_name = motoc + "_data" + ".txt"
+write_file_name = gs8 + "_data" + ".txt"
 
-start_index_path = base_path + motoc + "\\data_set\\resize_img\\start_index.txt"
+start_index_path = base_path + gs8 + "\\data_set\\resize_img\\start_index.txt"
 
 with open(start_index_path, 'r')as data_file:
     for line in data_file:
@@ -148,14 +151,14 @@ with open(start_index_path, 'r')as data_file:
 
         img_name = "img"+no
 
-        dev_img_path = motoc_img_path + img_name + ".jpg"
+        dev_img_path = gs8_img_path + img_name + "_resize.jpg"
         device_img = read_image(dev_img_path)
 
-        device_pixel_list, edit_image = plot_coordinate(device_img, int(x), int(y), region)
+        device_pixel_list, edit_image = plot_coordinate(device_img, int(x), int(y), region, int(no))
 
-        write_image(motoc_img_path + img_name + "_plot.jpg", edit_image)
+        write_image(gs8_img_path + img_name + "_plot.jpg", edit_image)
 
-        write_file(motoc_img_path + write_file_name, device_pixel_list)
+        write_file(gs8_img_path + write_file_name, device_pixel_list)
 
         print("Finish Image", no)
     print("Finish -------------")
