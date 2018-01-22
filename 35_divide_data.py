@@ -3,9 +3,9 @@ from random import shuffle
 train_ratio = 80
 test_ratio = 20
 
-device_data = "C:\\Users\\Mig\\Documents\\Thesis\\s8_motoC\\s8_motoC_data.txt"
-output_train_data = "C:\\Users\\Mig\\Documents\\Thesis\\s8_motoC\\s8_motoC_train_data.txt"
-output_test_data = "C:\\Users\\Mig\\Documents\\Thesis\\s8_motoC\\s8_motoC_test_data.txt"
+device_data = "C:\\Users\\Mig\\Documents\\Thesis\\s8_motoC\\s8_motoC_data_6.txt"
+output_train_data = "C:\\Users\\Mig\\Documents\\Thesis\\s8_motoC\\s8_motoC_train_data_6.txt"
+output_test_data = "C:\\Users\\Mig\\Documents\\Thesis\\s8_motoC\\s8_motoC_test_data_6.txt"
 
 data_file = open(device_data, "r")
 data_list = data_file.readlines()
@@ -18,10 +18,13 @@ length = len(data_list)
 #print(length)
 train_length = int(length * (train_ratio/100))
 test_length = int(length * (test_ratio/100))
+print("Train : ", train_length)
+print("Test : ", test_length)
 print("Finish Divide data")
 
-#print("Train Length", train_length)
-#print("Test Length", test_length)
+print("Train Length", train_length)
+print("Test Length", test_length)
+
 
 with open(output_train_data, "a") as train_file:
     for i in range(train_length):

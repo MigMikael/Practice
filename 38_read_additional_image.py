@@ -4,7 +4,7 @@ sx, sy = 0, 0
 
 
 def greetings():
-    print("Welcome to auto region picker")
+    print("Welcome to additional auto region picker")
 
 
 def read_image(path):
@@ -19,16 +19,12 @@ def plot_coordinate(img, x, y, region, num):
     count = 0
     pixel_list = []
 
-    for i in range(20):
-        for j in range(16):
-            bias_x = i // 5
-            bias_y = j // 4
-
-            if num == 3 or num == 21 or num == 36 or num == 41 or num == 44 or num == 55 or num == 69:
-                indexX, indexY = startX + 10 + (67 * i) - (bias_x * 8), startY + 10 + (67 * j) - (bias_y * 8)
+    for i in range(6):
+        for j in range(5):
+            if num == 2 or num == 3 or num == 5 or num == 6 or num == 7 or num == 9:
+                indexX, indexY = startX + 10 + (135 * i), startY + 10 + (135 * j)
             else:
-                indexX, indexY = startX + 10 + (67 * i) - (bias_x * 5), startY + 10 + (67 * j) - (bias_y * 5)
-
+                indexX, indexY = startX + 10 + (160 * i), startY + 10 + (160 * j)
             index_sq1_x, index_sq1_y = indexX, indexY
             index_sq2_x, index_sq2_y = indexX + 9, indexY
             index_sq3_x, index_sq3_y = indexX + 18, indexY
@@ -99,7 +95,7 @@ def plot_coordinate(img, x, y, region, num):
             pixel_list = collect_pixel_data(sq9_crop, pixel_list)
 
             count += 1
-
+    print(len(pixel_list))
     return pixel_list, edit_img
 
 
@@ -120,7 +116,7 @@ def write_file(file_name, the_list):
             data_line = str(the_list[i][0]) + " " + str(the_list[i][1]) + " " + str(the_list[i][2])
             data_line = data_line + "\n"
             outfile.write(data_line)
-    #print("wrote file")
+    # print("wrote file")
 
 
 def write_image(write_path, image):
@@ -135,15 +131,15 @@ mi5 = "Mi5"
 motoc = "MotoC"
 gs8 = "S8+"
 
-ipad_img_path = base_path + ipad + "\\data_set\\resize_img\\"
-mi5_img_path = base_path + mi5 + "\\data_set\\resize_img\\"
-motoc_img_path = base_path + motoc + "\\data_set\\resize_img\\"
-gs8_img_path = base_path + gs8 + "\\data_set\\resize_img\\"
+ipad_img_path = base_path + ipad + "\\additional_img\\resize_img\\"
+mi5_img_path = base_path + mi5 + "\\additional_img\\resize_img\\"
+motoc_img_path = base_path + motoc + "\\additional_img\\resize_img\\"
+gs8_img_path = base_path + gs8 + "\\additional_img\\resize_img\\"
 
 greetings()
-write_file_name = gs8 + "_data" + ".txt"
+write_file_name = "C:\\Users\\Mig\\Documents\\Thesis\\S8+\\data_set\\resize_img\\S8+_data.txt"
 
-start_index_path = base_path + gs8 + "\\data_set\\resize_img\\start_index.txt"
+start_index_path = base_path + gs8 + "\\additional_img\\resize_img\\start_index.txt"
 
 with open(start_index_path, 'r')as data_file:
     for line in data_file:
@@ -158,7 +154,7 @@ with open(start_index_path, 'r')as data_file:
 
         write_image(gs8_img_path + img_name + "_plot.jpg", edit_image)
 
-        write_file(gs8_img_path + write_file_name, device_pixel_list)
+        write_file(write_file_name, device_pixel_list)
 
         print("Finish Image", no)
     print("Finish -------------")
