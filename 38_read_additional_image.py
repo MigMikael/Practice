@@ -21,21 +21,36 @@ def plot_coordinate(img, x, y, region, num):
 
     for i in range(6):
         for j in range(5):
+
+             # S8
             if num == 2 or num == 3 or num == 5 or num == 6 or num == 7 or num == 9:
                 indexX, indexY = startX + 10 + (135 * i), startY + 10 + (135 * j)
             else:
                 indexX, indexY = startX + 10 + (160 * i), startY + 10 + (160 * j)
+            '''
+            if num == 1 or num == 5 or num == 8 or num == 9 or num == 10:
+                indexX, indexY = startX + 10 + (155 * i), startY + 10 + (155 * j)
+            else:
+                indexX, indexY = startX + 10 + (135 * i), startY + 10 + (135 * j)
+            '''
+
             index_sq1_x, index_sq1_y = indexX, indexY
-            index_sq2_x, index_sq2_y = indexX + 9, indexY
-            index_sq3_x, index_sq3_y = indexX + 18, indexY
+            index_sq2_x, index_sq2_y = indexX + 14, indexY
+            index_sq3_x, index_sq3_y = indexX + 28, indexY
 
-            index_sq4_x, index_sq4_y = indexX, indexY + 9
-            index_sq5_x, index_sq5_y = indexX + 9, indexY + 9
-            index_sq6_x, index_sq6_y = indexX + 18, indexY + 9
+            index_sq4_x, index_sq4_y = indexX, indexY + 14
+            index_sq5_x, index_sq5_y = indexX + 14, indexY + 14
+            index_sq6_x, index_sq6_y = indexX + 28, indexY + 14
 
-            index_sq7_x, index_sq7_y = indexX, indexY + 18
-            index_sq8_x, index_sq8_y = indexX + 9, indexY + 18
-            index_sq9_x, index_sq9_y = indexX + 18, indexY + 18
+            index_sq7_x, index_sq7_y = indexX, indexY + 28
+            index_sq8_x, index_sq8_y = indexX + 14, indexY + 28
+            index_sq9_x, index_sq9_y = indexX + 28, indexY + 28
+
+            '''
+            index_sq10_x, index_sq10_y = indexX, indexY + 42
+            index_sq11_x, index_sq11_y = indexX + 14, indexY + 42
+            index_sq12_x, index_sq12_y = indexX + 28, indexY + 42
+            '''
 
             cv2.rectangle(edit_img, (index_sq1_x, index_sq1_y), (index_sq1_x + region, index_sq1_y + region),
                           (255, 255, 255), 1)
@@ -57,6 +72,15 @@ def plot_coordinate(img, x, y, region, num):
                           (255, 255, 255), 1)
             cv2.rectangle(edit_img, (index_sq9_x, index_sq9_y), (index_sq9_x + region, index_sq9_y + region),
                           (255, 255, 255), 1)
+
+            '''
+            cv2.rectangle(edit_img, (index_sq10_x, index_sq10_y), (index_sq10_x + region, index_sq10_y + region),
+                          (255, 255, 255), 1)
+            cv2.rectangle(edit_img, (index_sq11_x, index_sq11_y), (index_sq11_x + region, index_sq11_y + region),
+                          (255, 255, 255), 1)
+            cv2.rectangle(edit_img, (index_sq12_x, index_sq12_y), (index_sq12_x + region, index_sq12_y + region),
+                          (255, 255, 255), 1)
+            '''
 
             sq1_crop = img[index_sq1_y:index_sq1_y + region, index_sq1_x:index_sq1_x + region]
             sq1_crop = cv2.cvtColor(sq1_crop, cv2.COLOR_BGR2RGB)
@@ -93,6 +117,20 @@ def plot_coordinate(img, x, y, region, num):
             sq9_crop = img[index_sq9_y:index_sq9_y + region, index_sq9_x:index_sq9_x + region]
             sq9_crop = cv2.cvtColor(sq9_crop, cv2.COLOR_BGR2RGB)
             pixel_list = collect_pixel_data(sq9_crop, pixel_list)
+
+            '''
+            sq10_crop = img[index_sq10_y:index_sq10_y + region, index_sq10_x:index_sq10_x + region]
+            sq10_crop = cv2.cvtColor(sq10_crop, cv2.COLOR_BGR2RGB)
+            pixel_list = collect_pixel_data(sq10_crop, pixel_list)
+
+            sq11_crop = img[index_sq11_y:index_sq11_y + region, index_sq11_x:index_sq11_x + region]
+            sq11_crop = cv2.cvtColor(sq11_crop, cv2.COLOR_BGR2RGB)
+            pixel_list = collect_pixel_data(sq11_crop, pixel_list)
+
+            sq12_crop = img[index_sq12_y:index_sq12_y + region, index_sq12_x:index_sq12_x + region]
+            sq12_crop = cv2.cvtColor(sq12_crop, cv2.COLOR_BGR2RGB)
+            pixel_list = collect_pixel_data(sq12_crop, pixel_list)
+            '''
 
             count += 1
     print(len(pixel_list))

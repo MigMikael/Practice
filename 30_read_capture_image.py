@@ -24,11 +24,17 @@ def plot_coordinate(img, x, y, region, num):
             bias_x = i // 5
             bias_y = j // 4
 
+            # S8
             if num == 3 or num == 21 or num == 36 or num == 41 or num == 44 or num == 55 or num == 69:
                 indexX, indexY = startX + 10 + (67 * i) - (bias_x * 8), startY + 10 + (67 * j) - (bias_y * 8)
             else:
                 indexX, indexY = startX + 10 + (67 * i) - (bias_x * 5), startY + 10 + (67 * j) - (bias_y * 5)
-
+            '''
+            if num == 4 or num == 6 or num == 13:
+                indexX, indexY = startX + 10 + (67 * i) - (bias_x * 8), startY + 10 + (67 * j) - (bias_y * 8)
+            else:
+                indexX, indexY = startX + 10 + (67 * i) - (bias_x * 5), startY + 10 + (67 * j) - (bias_y * 5)
+            '''
             index_sq1_x, index_sq1_y = indexX, indexY
             index_sq2_x, index_sq2_y = indexX + 9, indexY
             index_sq3_x, index_sq3_y = indexX + 18, indexY
