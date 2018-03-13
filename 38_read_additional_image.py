@@ -22,18 +22,24 @@ def plot_coordinate(img, x, y, region, num):
     for i in range(6):
         for j in range(5):
 
-             # S8
+            # S8
             if num == 2 or num == 3 or num == 5 or num == 6 or num == 7 or num == 9:
                 indexX, indexY = startX + 10 + (135 * i), startY + 10 + (135 * j)
             else:
                 indexX, indexY = startX + 10 + (160 * i), startY + 10 + (160 * j)
             '''
+            # motoC
             if num == 1 or num == 5 or num == 8 or num == 9 or num == 10:
                 indexX, indexY = startX + 10 + (155 * i), startY + 10 + (155 * j)
             else:
                 indexX, indexY = startX + 10 + (135 * i), startY + 10 + (135 * j)
+            
+            # iPad
+            if num == 7 or num == 8 or num == 9:
+                indexX, indexY = startX + 10 + (115 * i), startY + 10 + (115 * j)
+            else:
+                indexX, indexY = startX + 10 + (125 * i), startY + 10 + (125 * j)
             '''
-
             index_sq1_x, index_sq1_y = indexX, indexY
             index_sq2_x, index_sq2_y = indexX + 14, indexY
             index_sq3_x, index_sq3_y = indexX + 28, indexY
@@ -148,6 +154,42 @@ def collect_pixel_data(tiny_crop, pixel_list):
     return pixel_list
 
 
+def collect_pixel_data2(tiny_crop, pixel_list):
+    for k in range(1, 6):       # 1 2 3 4 5
+        for l in range(1, 6):   # 1 2 3 4 5
+            center_x = k
+            center_y = l
+            sum_r, sum_g, sum_b = 0, 0, 0
+            for m in range(center_x - 1, center_x + 2):
+                for n in range(center_y - 1, center_y + 2):
+                    sum_r += tiny_crop[m][n][0]
+                    sum_g += tiny_crop[m][n][1]
+                    sum_b += tiny_crop[m][n][2]
+
+            r = int(round(sum_r / float(9)))
+            g = int(round(sum_g / float(9)))
+            b = int(round(sum_b / float(9)))
+            pixel_list.append([r, g, b])
+
+    return pixel_list
+
+
+def collect_pixel_data3(tiny_crop, pixel_list):
+    r, g, b = 0, 0, 0
+    for k in range(tiny_crop.shape[0]):
+        for l in range(tiny_crop.shape[1]):
+            r += tiny_crop[k][l][0]
+            g += tiny_crop[k][l][1]
+            b += tiny_crop[k][l][2]
+
+    r = int(round(r / float(49)))
+    g = int(round(g / float(49)))
+    b = int(round(b / float(49)))
+    pixel_list.append([r, g, b])
+
+    return pixel_list
+
+
 def write_file(file_name, the_list):
     with open(file_name, 'a') as outfile:
         for i in range(len(the_list)):
@@ -175,7 +217,7 @@ motoc_img_path = base_path + motoc + "\\additional_img\\resize_img\\"
 gs8_img_path = base_path + gs8 + "\\additional_img\\resize_img\\"
 
 greetings()
-write_file_name = "C:\\Users\\Mig\\Documents\\Thesis\\S8+\\data_set\\resize_img\\S8+_data.txt"
+write_file_name = "C:\\Users\\Mig\\Documents\\Thesis\\S8+\\data_set\\resize_img\\S8+_data-14.txt"
 
 start_index_path = base_path + gs8 + "\\additional_img\\resize_img\\start_index.txt"
 
