@@ -39,9 +39,9 @@ def four_point_transform(image, pts):
     return warped
 
 
-image_path = "C:\\Users\\Mig\\PycharmProjects\\Practice\\capture_image\\img6.jpg"
+image_path = "C:\\Users\\Mig\\PycharmProjects\\Practice\\capture_image\\img_test.jpg"
 image = cv2.imread(image_path)
-with open('C:\\Users\\Mig\\PycharmProjects\\Practice\\capture_image\\coord3.txt', 'r') as coord_file:
+with open('C:\\Users\\Mig\\PycharmProjects\\Practice\\capture_image\\coord4.txt', 'r') as coord_file:
     line = coord_file.read()
     point1, point2, point3, point4 = line.split('|')
     point1_x, point1_y = point1.split(',')
